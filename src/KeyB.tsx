@@ -32,13 +32,13 @@ export function KeyB() {
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "repeat (auto-fit,minmax(75px,1fr))",
+        gridTemplateColumns: "repeat(auto-fit,minmax(75px,1fr))",
         gap: ".5rem",
       }}
     >
       {Keys.map((key) => {
         return (
-          <button className={styles.btn} key={key}>
+          <button className={`${styles.btn}`} key={key}>
             {key}
           </button>
         );
