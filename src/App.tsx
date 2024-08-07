@@ -1,5 +1,10 @@
 import {useState} from 'react'
 import words from "./wordList.json"
+import { Drawing } from './Drawing'
+import { KeyB } from './KeyB';
+import { Word } from './Word';
+
+
 
 function App() {
   const [wordToGuess, setWordToGuess] = useState(() => {
@@ -14,10 +19,14 @@ function App() {
         gap: "2rem", margin: " 0 auto", alignItems: "center"
       }}
     >
-      <div>
+      <div style = {{ fontSize:" 3rem ", textAlign: "center"}}>
         Lose
         Win
       </div>
+      <Drawing/>
+      <KeyB/>
+      <Word/>
+      
 
     </div>
   )
