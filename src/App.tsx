@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import words from "./wordList.json";
 import { Drawing } from "./Drawing";
 import { KeyB } from "./KeyB";
@@ -9,10 +9,32 @@ function App() {
     return words[Math.floor(Math.random() * words.length)];
   });
   const [guessLetter, setGuessLetters] = useState<string[]>([]);
-  console.log(wordToGuess);
+
   const inCorrectL = guessLetter.filter(
     (letter) => !wordToGuess.includes(letter)
   );
+
+  const addGLetter = useCallback(
+    (key: string) => {
+      if (guessLetter.includes(key)) return;
+      setGuessLetters((currLetters) => [...currLetters, key]);
+    },
+    [guessLetter]
+  );
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const key = e.key;
+      if (!key.match(/^[a-z]$/)) return;
+      e.preventDefault();
+      addGLetter(key);
+    };
+    document.addEventListener("keypress", handler);
+    return () => {
+      document.removeEventListener("keypress", handler);
+    };
+  }, []);
+
   return (
     <div
       style={{
@@ -28,7 +50,13 @@ function App() {
       <Drawing numberofGuesses={inCorrectL.length} />
       <Word guessLetter={guessLetter} wordToGuess={wordToGuess} />
       <div style={{ alignSelf: "stretch" }}>
-        <KeyB />
+        <KeyB
+          activeLetter={guessLetter.filter((letter) =>
+            wordToGuess.includes(letter)
+          )}
+          inActiveLetter={inCorrectL}
+          addGLetter={addGLetter}
+        />
       </div>
     </div>
   );

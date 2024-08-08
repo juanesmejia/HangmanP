@@ -27,7 +27,14 @@ const Keys = [
   "y",
   "z",
 ];
-export function KeyB() {
+
+type KeyBProps = {
+  activeLetter: string[];
+  inActiveLetter: string[];
+  addGLetter: (letter: string) => void;
+};
+
+export function KeyB({ activeLetter, inActiveLetter, addGLetter }: KeyBProps) {
   return (
     <div
       style={{
@@ -37,8 +44,16 @@ export function KeyB() {
       }}
     >
       {Keys.map((key) => {
+        const active = activeLetter.includes(key);
+        const Nactive = inActiveLetter.includes(key);
         return (
-          <button className={`${styles.btn}`} key={key}>
+          <button
+            onClick={() => addGLetter(key)}
+            className={`${styles.btn} ${active ? styles.active : ""} ${
+              Nactive ? styles.inactive : ""
+            }`}
+            key={key}
+          >
             {key}
           </button>
         );
