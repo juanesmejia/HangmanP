@@ -32,9 +32,15 @@ type KeyBProps = {
   activeLetter: string[];
   inActiveLetter: string[];
   addGLetter: (letter: string) => void;
+  disabled?: boolean;
 };
 
-export function KeyB({ activeLetter, inActiveLetter, addGLetter }: KeyBProps) {
+export function KeyB({
+  activeLetter,
+  inActiveLetter,
+  disabled = false,
+  addGLetter,
+}: KeyBProps) {
   return (
     <div
       style={{
@@ -52,6 +58,7 @@ export function KeyB({ activeLetter, inActiveLetter, addGLetter }: KeyBProps) {
             className={`${styles.btn} ${active ? styles.active : ""} ${
               Nactive ? styles.inactive : ""
             }`}
+            disabled={active || Nactive || disabled}
             key={key}
           >
             {key}

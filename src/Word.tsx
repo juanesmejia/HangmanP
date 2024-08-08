@@ -1,9 +1,10 @@
 type WordProps = {
   guessLetter: string[];
   wordToGuess: string;
+  reveal?: boolean;
 };
 
-export function Word({ guessLetter, wordToGuess }: WordProps) {
+export function Word({ guessLetter, wordToGuess, reveal = false }: WordProps) {
   return (
     <div
       style={{
@@ -19,7 +20,9 @@ export function Word({ guessLetter, wordToGuess }: WordProps) {
         <span style={{ borderBottom: ".1em solid black" }} key={index}>
           <span
             style={{
-              visibility: guessLetter.includes(letter) ? "visible" : "hidden",
+              visibility:
+                guessLetter.includes(letter) || reveal ? "visible" : "hidden",
+              color: !guessLetter.includes(letter) && reveal ? "red" : "black",
             }}
           >
             {letter}
